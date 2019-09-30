@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const Header = ({ onAdd }) => {
+const Header = ({ onAdd, onDeleteItem }) => {
 
   const ref = React.createRef();
 

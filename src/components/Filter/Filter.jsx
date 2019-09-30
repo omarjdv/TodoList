@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Filter = () => {
+const Filter = ({ onShowAllList, todoList, completed }) => {
   return (
     <div className="card-body">
       <a href="#" className="card-link">All</a>

@@ -21,6 +21,13 @@ class TodoApp extends Component {
     });
   }
 
+  onDeleteItem = (id) => {
+   const { todoList } = this.state;
+   const newList = todoList.filter(news => news.id !== id);
+    // console.log(id, newList);
+  this.setState({todoList: newList})
+  }
+
   onCompletedTask = (id) => {
     const newTodoList = this.state.todoList.map(item => {
       if(item.id === id){
@@ -35,13 +42,13 @@ class TodoApp extends Component {
   }
 
   render() {
-    const { onAddItem, state: { todoList } } = this;
+    const { onDeleteItem, onAddItem, onShowAllList, state: { todoList } } = this;
 
     return (
       <div className="container mt-5">
         <div className="card">
           <Header onAdd={ onAddItem } />
-          <TodoList onCompletedTask={this.onCompletedTask} TodoList={ todoList }/>
+          <TodoList onDeleteItem={onDeleteItem} onCompletedTask={this.onCompletedTask} TodoList={ todoList }/>
           <Filter />
         </div>
       </div>
