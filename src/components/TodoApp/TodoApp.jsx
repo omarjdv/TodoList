@@ -6,6 +6,7 @@ import Filter from '../Filter';
 class TodoApp extends Component {
   state = {
     todoList: [],
+    filterby: 'ALL',
   }
 
   onAddItem = (item) => {
@@ -28,6 +29,10 @@ class TodoApp extends Component {
   this.setState({todoList: newList})
   }
 
+  onChangeFilter = (filter) => {
+   this.setState({filterby: filter})
+   }
+
   onCompletedTask = (id) => {
     const newTodoList = this.state.todoList.map(item => {
       if(item.id === id){
@@ -42,14 +47,26 @@ class TodoApp extends Component {
   }
 
   render() {
-    const { onDeleteItem, onAddItem, onShowAllList, state: { todoList } } = this;
+    const { onDeleteItem, onAddItem, onCompletedTask, state: { todoList, filterby } } = this;
+    const todoListToShow = todoList.filter(todo => {
+      if(filterby === 'ALL') {
+        return true;
+      }
+      if(filterby === 'COMPLETED') {
+        return todo.completed === true;
+      }
+      if(filterby === 'ACTIVE') {
+        return todo.completed !== true;
+      }
+
+    });
 
     return (
       <div className="container mt-5">
-        <div className="card">
+        <div className="card card-body">
           <Header onAdd={ onAddItem } />
-          <TodoList onDeleteItem={onDeleteItem} onCompletedTask={this.onCompletedTask} TodoList={ todoList }/>
-          <Filter />
+          <TodoList onDeleteItem={onDeleteItem} onCompletedTask={onCompletedTask} TodoList={ todoListToShow }/>
+          <Filter onChangeFilter={this.onChangeFilter}/>
         </div>
       </div>
     );
